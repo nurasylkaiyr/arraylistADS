@@ -11,6 +11,8 @@ public class MyLinkedList<T> implements MyList<T> {
             this.prev = null;
         }
     }
+    private Node head;
+
     @Override
     public int size() {
         return 0;
