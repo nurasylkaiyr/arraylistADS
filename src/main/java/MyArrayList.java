@@ -81,6 +81,7 @@ public class MyArrayList<T> implements MyList<T>{
     public int getSize() {
         return size;
     }
+    @Override
     public void clear(){
         this.arr = (T[]) new Object[5];
         this.size = 0;
@@ -94,7 +95,12 @@ public class MyArrayList<T> implements MyList<T>{
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        for(int i = 0; i<size; i++){
+            if(arr[i].equals(o)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
