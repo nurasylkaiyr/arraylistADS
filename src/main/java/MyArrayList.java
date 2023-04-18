@@ -21,7 +21,7 @@ public class MyArrayList<T> implements MyList<T>{
         }
         return false;
     }
-
+    @Override
     public void  add(T element){
         if(size == arr.length){
             increaseBuffer();
@@ -30,8 +30,16 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-    public void add(T item, int index) {
-
+    public void add(T element, int index) {
+        checkIndex(index);
+        if(size == arr.length){
+            increaseBuffer();
+        }
+        for(int i = size - 1; i >= index; i--){
+            arr[i+1] = arr[i];
+        }
+        arr[index] = element;
+        size++;
     }
 
     @Override
