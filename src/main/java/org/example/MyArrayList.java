@@ -1,3 +1,5 @@
+package org.example;
+
 public class MyArrayList<T> implements MyList<T>{
     private T[] arr;
     private int size;
@@ -127,7 +129,7 @@ public class MyArrayList<T> implements MyList<T>{
                     swap = true;
                 }
             }
-            size--;
+
         }
     }
 
