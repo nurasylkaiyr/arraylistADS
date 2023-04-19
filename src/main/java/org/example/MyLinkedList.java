@@ -2,11 +2,11 @@ package org.example;
 
 public class MyLinkedList<T> implements MyList<T> {
     private class Node{
-        private T element;
+        private T[] element;
         private Node next;
         private Node prev;
         public Node(T element) {
-            this.element = element;
+            this.element = (T[]) element;
             this.next = null;
             this.prev = null;
         }
@@ -91,7 +91,30 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        Node current;
+        int count;
+
+        if (index < size / 2) {
+            current = head;
+            count = 0;
+            while (count < index) {
+                current = current.next;
+                count++;
+            }
+        } else {
+            current = tail;
+            count = size - 1;
+            while (count > index) {
+                current = current.prev;
+                count--;
+            }
+        }
+
+        return (T) current.element;
     }
 
     @Override
