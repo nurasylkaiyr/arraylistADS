@@ -1,20 +1,34 @@
 package org.example;
 
 public class MyLinkedList<T> implements MyList<T> {
+
+    /*
+     This is a private class that represents a node in the linked list.
+     Each node contains an element of type T and references to the next and previous nodes.
+     */
     private class Node{
-        T element;
-        Node next;
-        Node prev;
+        T element; // The element stored in this node
+        Node next; // Reference to the next node in the list
+        Node prev; // Reference to the previous node in the list
+
+        /*
+         Constructor to create a new Node with the given element.
+         The next and prev references are initially set to null.
+         */
         public Node(T element) {
             this.element = element;
             this.next = null;
             this.prev = null;
         }
     }
-    private Node head;
-    private Node tail;
-    private int size;
+    private Node head; // Reference to the first node in the list
+    private Node tail; // Reference to the last node in the list
+    private int size; // The number of nodes in the list
 
+    /*
+     Constructor to create a new empty MyLinkedList object.
+     The head and tail references are initially set to null, and the size is set to 0.
+     */
     public MyLinkedList() {
         head = null;
         tail = null;
@@ -23,91 +37,92 @@ public class MyLinkedList<T> implements MyList<T> {
     @Override
     public int size() {
         return size;
-    }
+    } // Returns the current size of the list
 
     @Override
+    // This method used to check whether a particular object is present in a list or not.
     public boolean contains(Object o) {
         return indexOf(o) != -1;
     }
 
     @Override
     public void add(T element) {
-        Node node = new Node(element);
-        if(head == null){
+        Node node = new Node(element); // Create a new node to hold the element
+        if(head == null){ // If the linked list is empty, set the head and tail to the new node
             head = node;
             tail = node;
         }
-        else{
+        else{ // If the linked list is not empty, add the new node to the end of the list
             tail.next = node;
             node.prev = tail;
             tail = node;
         }
-        size++;
+        size++; // Increase the size of the linked list
     }
 
     @Override
     public void add(T element, int index) {
-        if(index < 0 || index > size) {
+        if(index < 0 || index > size) { // Check if the index is valid
             throw new IndexOutOfBoundsException();
         }
-        Node node = new Node(element);
-        if(index == 0){
+        Node node = new Node(element); // Create a new node to hold the element
+        if(index == 0){ // If the index is 0, add the new node to the beginning of the linked list
             node.next = head;
             head.prev = node;
             head = node;
         }
-        else if(index == size){
+        else if(index == size){ // If the index is the size of the linked list, add the new node to the end of the linked list
             tail.next = node;
             node.prev = tail;
             tail = node;
         }
-        else {
-            Node current = head;
+        else { // If the index is in the middle of the linked list, add the new node to the specified index
+            Node current = head; // Traverse the linked list to the specified index
             for (int i = 0; i < index; i++) {
                 current = current.next;
-            }
+            } // Add the new node to the specified index by adjusting the pointers of the neighboring
             node.next = current;
             node.prev = current.prev;
             current.prev.next = node;
             current.prev = node;
         }
-        size++;
+        size++; // Increase the size of the linked list
     }
 
     @Override
     public boolean remove(T item) {
-        Node current = head;
+        Node current = head; // start from the head of the list
 
-        while (current != null) {
-            if (current.element.equals(item)) {
-                if (current.prev == null) {
-                    head = current.next;
+        while (current != null) { // iterate over the list
+            if (current.element.equals(item)) {  // if the current node's element matches the given item
+                if (current.prev == null) { // if the current node is the head of the list
+                    head = current.next;  // set the head to the next node
                     if (head != null) {
-                        head.prev = null;
-                    } else {
-                        tail = null;
+                        head.prev = null; //if there is a new head nodeset its previous reference to null
+                    } else { // otherwise, the list is empty
+                        tail = null; // set the tail reference to null as well
                     }
-                } else if (current.next == null) {
-                    tail = current.prev;
-                    tail.next = null;
-                } else {
-                    current.prev.next = current.next;
-                    current.next.prev = current.prev;
+                } else if (current.next == null) { // if the current node is the tail of the list
+                    tail = current.prev; // set the tail to the previous node
+                    tail.next = null;  // set the new tail's next reference to null
+                } else { // if the current node is in the middle of the list
+                    current.prev.next = current.next;  // set the previous node's next reference to the next
+                    current.next.prev = current.prev; // set the next node's previous reference to the previous node
                 }
-                size--;
-                return true;
+                size--; // decrement the size of the list
+                return true; // indicate that the element was successfully removed
             }
-            current = current.next;
+            current = current.next; // move to the next node in the list
         }
-        return false;
+        return false; // indicate that the element was not found in the list
     }
 
     @Override
     public T remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= size) { // method first checks if the index is within the bounds of the linked list
+            throw new IndexOutOfBoundsException(); // and throws an IndexOutOfBoundsException if it is not
         }
-
+        //It then proceeds to remove the node at the specified index, updating the head and tail references if necessary.
         Node current;
 
         if (index == 0) {
@@ -145,11 +160,16 @@ public class MyLinkedList<T> implements MyList<T> {
             current.prev.next = current.next;
             current.next.prev = current.prev;
         }
-
+        // decrements the size of the linked list and returns the removed element.
         size--;
         return (T) current.element;
     }
 
+    /*
+        The clear() method simply sets the head, tail,
+        and size variables to null and 0, respectively,
+        effectively removing all elements from the linked list.
+     */
     @Override
     public void clear() {
         head = null;
@@ -158,11 +178,12 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
-    public T get(int index) {
-        if (index < 0 || index >= size) {
+    public T get(int index) { // This method first checks if the index is within the bounds of the linked list
+        if (index < 0 || index >= size) { // throws an IndexOutOfBoundsException if it is not
             throw new IndexOutOfBoundsException();
         }
-
+        // traverses the linked list from either the head or tail depending on the index,
+        // until it reaches the node at the specified index,
         Node current;
         int count;
 
@@ -182,9 +203,13 @@ public class MyLinkedList<T> implements MyList<T> {
             }
         }
 
-        return (T) current.element;
+        return (T) current.element; // returns its element.
     }
-
+    /*
+        The indexOf(Object o) and lastIndexOf(Object o) methods traverse the linked list from the head and tail,
+        respectively, until they find the first or last occurrence
+         of the specified element, returning its index or -1 if it is not found.
+     */
     @Override
     public int indexOf(Object o) {
         Node curr = head;
@@ -213,6 +238,14 @@ public class MyLinkedList<T> implements MyList<T> {
         }
         return -1;
     }
+    /*
+    The sort() method implements the bubble sort algorithm to sort the elements in the linked list in ascending order,
+    using the compareTo() method of the elements. It first checks
+    if the size of the linked list is less than or equal to 1,
+    in which case the list is already sorted.
+    , it repeatedly compares adjacent elements and swaps them if they are out of order,
+    until no more swaps are needed.
+     */
 
     @Override
     public void sort() {
