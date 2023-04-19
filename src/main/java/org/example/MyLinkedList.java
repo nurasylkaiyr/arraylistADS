@@ -2,11 +2,11 @@ package org.example;
 
 public class MyLinkedList<T> implements MyList<T> {
     private class Node{
-        private T[] element;
-        private Node next;
-        private Node prev;
+        T element;
+        Node next;
+        Node prev;
         public Node(T element) {
-            this.element = (T[]) element;
+            this.element = element;
             this.next = null;
             this.prev = null;
         }
@@ -228,7 +228,7 @@ public class MyLinkedList<T> implements MyList<T> {
                     // Swap elements
                     T temp = (T) curr.element;
                     curr.element = curr.next.element;
-                    curr.next.element = (T[]) temp;
+                    curr.next.element = (T) temp;
                     swapped = true;
                 }
                 curr = curr.next;
