@@ -76,12 +76,78 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public boolean remove(T item) {
+        Node current = head;
+
+        while (current != null) {
+            if (current.element.equals(item)) {
+                if (current.prev == null) {
+                    head = current.next;
+                    if (head != null) {
+                        head.prev = null;
+                    } else {
+                        tail = null;
+                    }
+                } else if (current.next == null) {
+                    tail = current.prev;
+                    tail.next = null;
+                } else {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                }
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
     @Override
     public T remove(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        Node current;
+
+        if (index == 0) {
+            current = head;
+            head = current.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null;
+            }
+        } else if (index == size - 1) {
+            current = tail;
+            tail = current.prev;
+            if (tail != null) {
+                tail.next = null;
+            } else {
+                head = null;
+            }
+        } else {
+            if (index < size / 2) {
+                current = head;
+                int count = 0;
+                while (count < index) {
+                    current = current.next;
+                    count++;
+                }
+            } else {
+                current = tail;
+                int count = size - 1;
+                while (count > index) {
+                    current = current.prev;
+                    count--;
+                }
+            }
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+
+        size--;
+        return (T) current.element;
     }
 
     @Override
