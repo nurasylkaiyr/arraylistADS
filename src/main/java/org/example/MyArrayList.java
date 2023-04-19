@@ -1,21 +1,21 @@
 package org.example;
 
 public class MyArrayList<T> implements MyList<T>{
-    private T[] arr;
-    private int size;
+    private T[] arr; // An array to hold the elements in the list
+    private int size; // The number of elements in the list
 
-    MyArrayList(){
+    MyArrayList(){  // Constructor that initializes the array with a default size of 5 and sets size to 0
         this.arr = (T[]) new Object[5];
         this.size = 0;
     }
 
     @Override
-    public int size() {
+    public int size() { // Returns the current size of the list
         return size;
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(Object o) {  // Returns true if the specified object is present in the list, false otherwise
         for(int i = 0; i < size; i++){
             if(arr[i].equals(o)){
                 return true;
@@ -24,7 +24,7 @@ public class MyArrayList<T> implements MyList<T>{
         return false;
     }
     @Override
-    public void  add(T element){
+    public void  add(T element){  // Adds an element to the end of the list
         if(size == arr.length){
             increaseBuffer();
         }
@@ -32,11 +32,13 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-    public void add(T element, int index) {
-        checkIndex(index);
+    public void add(T element, int index) { // Adds an element at the specified index in the list
+        checkIndex(index); // Check if the index is valid
         if(size == arr.length){
-            increaseBuffer();
+            increaseBuffer(); // If the array is full, increase its size
         }
+        // This method inserts an element at a specified index in the array, shifting all
+        // elements to the right of the index by one position, and increasing the size of the array by one.
         for(int i = size - 1; i >= index; i--){
             arr[i+1] = arr[i];
         }
@@ -45,9 +47,11 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-    public boolean remove(T element) {
+
+
+    public boolean remove(T element) { // Removes the first occurrence of the specified element in the array.
         for(int i = 0; i < size; i++){
-            if(arr[i].equals(element)){
+            if(arr[i].equals(element)){ // It returns true if the element was found and removed, false otherwise.
                 remove(i);
                 return true;
             }
@@ -56,8 +60,8 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-    public T remove(int index) {
-        checkIndex(index);
+    public T remove(int index) { // This method removes the element at the specified index in the array, shifting
+        checkIndex(index);      // all elements to the right of the index by one position, and decreasing the size of the array by one.
         T removed_item = (T) arr[index];
         for(int i = index + 1; i < size; i++){
             arr[i-1] = arr[i];
@@ -67,7 +71,7 @@ public class MyArrayList<T> implements MyList<T>{
         return removed_item;
     }
 
-    public void increaseBuffer(){
+    public void increaseBuffer(){ // This method increases the capacity of the array by doubling its size.
         T[] newArr = (T[]) new Object[arr.length*2];
         for(int i=0; i< arr.length; i++){
             newArr[i]=arr[i];
@@ -75,29 +79,29 @@ public class MyArrayList<T> implements MyList<T>{
         arr = newArr;
     }
 
-    public T getElement(int index) {
+    public T getElement(int index) { // This method returns the element at the specified index in the array.
         checkIndex(index);
         return arr[index];
     }
 
-    public int getSize() {
+    public int getSize() { // This method returns the current size of the array.
         return size;
     }
     @Override
-    public void clear(){
+    public void clear(){ // This method clears the array and sets its capacity to 5.
         this.arr = (T[]) new Object[5];
         this.size = 0;
     }
 
     @Override
-    public T get(int index) {
+    public T get(int index) { // This method returns the element at the specified index in the array.
         checkIndex(index);
         return(T) arr[index];
     }
 
     @Override
-    public int indexOf(Object o) {
-        for(int i = 0; i<size; i++){
+    public int indexOf(Object o) {    // This method returns the index of the first occurrence of the specified element in the array,
+        for(int i = 0; i<size; i++){ // or -1 if the element is not found.
             if(arr[i].equals(o)){
                 return i;
             }
@@ -106,8 +110,8 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-    public int lastIndexOf(Object o) {
-        for(int i = size - 1; i>=0; i--){
+    public int lastIndexOf(Object o) {     // This method returns the index of the last occurrence of the specified element in the array,
+        for(int i = size - 1; i>=0; i--){ // or -1 if the element is not found.
             if(arr[i].equals(o)){
                 return i;
             }
@@ -117,6 +121,9 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
+    /* the "sort()" method, which is to sort the elements in the array in ascending order using the natural order of the elements.
+    The method uses the bubble sort algorithm, which iterates through the array multiple times, swapping adjacent elements
+    if they are in the wrong order until the array is sorted.*/
     public void sort() {
         boolean swap = true;
         while (swap) {
@@ -129,20 +136,21 @@ public class MyArrayList<T> implements MyList<T>{
                     swap = true;
                 }
             }
-
         }
     }
 
-    public void delete(int index){
-        checkIndex(index);
-        for(int i= index + 1; i<size; i++){
-            arr[i-1] = arr[i];
+    public void delete(int index){ // This method removes an element from the array list at the specified index.
+        checkIndex(index); // It first checks that the index is valid using the checkIndex(int index) method,
+        for(int i= index + 1; i<size; i++){ // then shifts all the elements after the specified index one position
+            arr[i-1] = arr[i]; // to the left to fill the gap left by the removed element.
         }
         size--;
     }
+    //This method is a helper method used to validate
+    // that the specified index is within the bounds of the current array list
     public void checkIndex(int index){
-        if(index < 0 || index>=size){
-            throw new IndexOutOfBoundsException();
+        if(index < 0 || index>=size){ //  If the index is less than zero or greater than or equal to the current size of the array list
+            throw new IndexOutOfBoundsException(); //  an IndexOutOfBoundsException is thrown.
         }
     }
 }
