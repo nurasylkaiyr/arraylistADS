@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        //Testing MyLinkedList
         MyLinkedList<Integer> list = new MyLinkedList<>();
         System.out.println("Size: " + list.size());
 
@@ -23,5 +24,40 @@ public class Main {
 
         System.out.println("Index of element 15: " + list.indexOf(15));
         System.out.println("Index of element 20: " + list.indexOf(20));
+
+        //Testing MyArrayList
+        MyArrayList<Integer> myList = new MyArrayList<>();
+        System.out.println("Size:" + myList.size());
+        myList.add(6);
+        myList.add(4);
+        myList.add(1);
+        myList.add(10);
+        myList.add(6);
+        myList.add(5);
+        System.out.println("Size after adding elements:" + myList.size());
+        for (int i = 0; i< myList.size();i++){
+            System.out.print(myList.get(i)+ " ");
+        }
+        System.out.println();
+        myList.sort();
+        for (int i = 0; i< myList.size();i++){
+            System.out.print(myList.get(i)+ " ");
+        }
+        System.out.println();
+        System.out.println(myList.size());
+        System.out.println(myList.contains(1));
+        System.out.println(myList.contains(2));
+        myList.add(8, 2);
+        for (int i = 0; i< myList.size();i++){
+            System.out.print(myList.get(i)+ " ");
+        }
+        System.out.println();
+        myList.remove(2);
+        for (int i = 0; i< myList.size();i++){
+            System.out.print(myList.get(i)+ " ");
+        }
+        System.out.println();
+        System.out.println(myList.indexOf(6));
+        System.out.println(myList.lastIndexOf(6));
     }
 }
