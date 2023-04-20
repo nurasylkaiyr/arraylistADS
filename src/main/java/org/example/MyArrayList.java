@@ -47,8 +47,6 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
-
-
     public boolean remove(T element) { // Removes the first occurrence of the specified element in the array.
         for(int i = 0; i < size; i++){
             if(arr[i].equals(element)){ // It returns true if the element was found and removed, false otherwise.
@@ -79,14 +77,6 @@ public class MyArrayList<T> implements MyList<T>{
         arr = newArr;
     }
 
-    public T getElement(int index) { // This method returns the element at the specified index in the array.
-        checkIndex(index);
-        return arr[index];
-    }
-
-    public int getSize() { // This method returns the current size of the array.
-        return size;
-    }
     @Override
     public void clear(){ // This method clears the array and sets its capacity to 5.
         this.arr = (T[]) new Object[5];
@@ -139,13 +129,6 @@ public class MyArrayList<T> implements MyList<T>{
         }
     }
 
-    public void delete(int index){ // This method removes an element from the array list at the specified index.
-        checkIndex(index); // It first checks that the index is valid using the checkIndex(int index) method,
-        for(int i= index + 1; i<size; i++){ // then shifts all the elements after the specified index one position
-            arr[i-1] = arr[i]; // to the left to fill the gap left by the removed element.
-        }
-        size--;
-    }
     //This method is a helper method used to validate
     // that the specified index is within the bounds of the current array list
     public void checkIndex(int index){
