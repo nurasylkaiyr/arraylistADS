@@ -178,6 +178,11 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public T get(int index) { // This method first checks if the index is within the bounds of the linked list
         if (index < 0 || index >= size) { // throws an IndexOutOfBoundsException if it is not
             throw new IndexOutOfBoundsException();

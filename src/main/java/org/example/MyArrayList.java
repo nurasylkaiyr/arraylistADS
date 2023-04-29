@@ -84,6 +84,11 @@ public class MyArrayList<T> implements MyList<T>{
     }
 
     @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
     public T get(int index) { // This method returns the element at the specified index in the array.
         checkIndex(index);
         return(T) arr[index];
