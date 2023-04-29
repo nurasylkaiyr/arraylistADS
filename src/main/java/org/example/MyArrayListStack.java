@@ -20,4 +20,10 @@ public class MyArrayListStack<T> {
         }
         return list.remove(size() - 1);
     }
+    public T peek() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return list.get(size() - 1);
+    }
 }
