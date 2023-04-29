@@ -9,4 +9,7 @@ public class MyLinkedListQueue<T> {
     public void enqueue(T element) {
         list.addLast(element);
     }
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 }
